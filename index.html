@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Thực Đơn Quán Bánh Tráng Chờ - Ăn Vặt & Đặc Sản</title>
+    <meta name="description" content="Thực đơn điện tử QR quán Bánh Tráng Chờ - Món ăn vặt thơm ngon, bánh tráng trộn, trà trái cây tươi mát. Đặt món và gọi hotline dễ dàng.">
+    <meta name="theme-color" content="#FF5E14">
+
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- ==================== HEADER & STORE INFO ==================== -->
+    <header class="hero-header">
+        <div class="container">
+            <div class="store-card">
+                <div class="store-top">
+                    <div class="store-logo" aria-label="Logo quán">
+                        🌯
+                    </div>
+                    <div class="store-title-wrap">
+                        <div class="store-status">
+                            <span class="status-dot"></span> Đang Mở Cửa Phục Vụ
+                        </div>
+                        <h1 class="store-name" id="storeName">Bánh Tráng Chờ</h1>
+                        <p class="store-slogan" id="storeSlogan">Ăn vặt thả ga - Đậm đà chuẩn vị</p>
+                    </div>
+                </div>
+
+                <!-- Chi tiết: Địa chỉ, Giờ giấc & Bản đồ -->
+                <div class="store-details">
+                    <div class="detail-item">
+                        <span class="icon">📍</span>
+                        <div>
+                            <span id="storeAddress">123 Đường Ăn Vặt, Quận 1, TP. Hồ Chí Minh</span>
+                            <br>
+                            <a id="storeMapLink" href="https://maps.google.com" target="_blank" rel="noopener noreferrer">
+                                🗺️ Xem vị trí trên Bản Đồ Google Maps &rarr;
+                            </a>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <span class="icon">⏰</span>
+                        <div>
+                            <span>Giờ phục vụ:</span><br>
+                            <strong id="storeHours">09:30 - 22:30 hàng ngày</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Thẻ tiện ích WiFi quán 1 chạm -->
+                <div class="wifi-badge-wrap">
+                    <div class="wifi-info-grid">
+                        <div class="wifi-row">
+                            <span class="wifi-label">📶 WiFi:</span>
+                            <strong id="wifiSsid">BanhTrangCho_FreeWifi</strong>
+                        </div>
+                        <div class="wifi-row">
+                            <span class="wifi-label">🔑 Mật khẩu:</span>
+                            <code id="wifiPass">banhtrangngonlam</code>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-copy-wifi" id="copyWifiBtn" title="Sao chép mật khẩu WiFi">
+                        📋 Sao Chép Mật Khẩu
+                    </button>
+                </div>
+
+                <!-- Nút Gọi Hotline nhanh ở đầu trang -->
+                <div class="store-actions">
+                    <a id="heroCallBtn" href="tel:0988888888" class="btn-call-hero">
+                        📞 Gọi Đặt Món Ngay
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== CONTROLS: SEARCH & CATEGORIES ==================== -->
+    <nav class="menu-controls" aria-label="Bộ lọc thực đơn">
+        <div class="container">
+            <!-- Ô tìm kiếm món ăn -->
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" 
+                       id="searchInput" 
+                       class="search-input" 
+                       placeholder="Tìm món ăn yêu thích (bánh tráng, nem rán, trà đào...)" 
+                       autocomplete="off">
+                <button type="button" id="clearSearchBtn" class="clear-search-btn" title="Xóa tìm kiếm">✕</button>
+            </div>
+
+            <!-- Thanh cuộn danh mục món -->
+            <div class="categories-wrapper">
+                <ul class="categories-list" id="categoryList">
+                    <!-- Danh mục sẽ được render tự động từ js/app.js -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ==================== MENU LIST SECTION ==================== -->
+    <main class="container">
+        <!-- Tiêu đề và số lượng món -->
+        <div class="menu-section-header">
+            <h2 class="menu-section-title">
+                <span>📋 Thực Đơn Quán</span>
+            </h2>
+            <span class="item-count-badge" id="itemCount">Đang tải...</span>
+        </div>
+
+        <!-- Grid hiển thị danh sách các món ăn -->
+        <section class="menu-grid" id="menuGrid" aria-live="polite">
+            <!-- Thẻ món ăn sẽ được render tự động từ data.js -->
+        </section>
+    </main>
+
+    <!-- ==================== BOTTOM FLOATING BAR (MOBILE FIRST) ==================== -->
+    <div class="bottom-floating-bar" aria-label="Thao tác nhanh">
+        <div class="floating-inner">
+            <a id="floatCallBtn" href="tel:0988888888" class="btn-float-call">
+                📞 Gọi Đặt Món Ngay
+            </a>
+            <a id="floatZaloBtn" href="https://zalo.me" target="_blank" rel="noopener noreferrer" class="btn-float-zalo">
+                💬 Chat Zalo
+            </a>
+        </div>
+    </div>
+
+    <!-- ==================== MODAL XEM CHI TIẾT MÓN ĂN ==================== -->
+    <div class="modal-overlay" id="itemModalOverlay" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="modal-container">
+            <div class="modal-image-wrap">
+                <img id="modalImage" src="" alt="Chi tiết món ăn" class="modal-image">
+                <button type="button" class="modal-close-btn" id="modalCloseBtn" aria-label="Đóng modal">✕</button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <span id="modalBadge" class="modal-badge">Món Nổi Bật</span>
+                </div>
+                <h3 id="modalTitle" class="modal-title">Tên Món Ăn</h3>
+                <div id="modalPrice" class="modal-price">0đ</div>
+                
+                <div class="modal-desc-heading">Mô tả & Thành phần:</div>
+                <p id="modalDescription" class="modal-desc-text">Mô tả chi tiết món ăn...</p>
+
+                <div class="modal-actions">
+                    <a id="modalCallBtn" href="tel:0988888888" class="modal-btn-call">
+                        📞 Gọi Đặt Món Này
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== NÚT CUỘN LÊN ĐẦU TRANG ==================== -->
+    <button type="button" class="btn-back-to-top" id="btnBackToTop" title="Cuộn lên đầu trang" aria-label="Cuộn lên đầu trang">
+        ↑
+    </button>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="page-footer">
+        <div class="container">
+            <p>© 2026 <strong id="copyrightStore">Bánh Tráng Chờ</strong>. Quét mã QR - Thưởng thức trọn vẹn.</p>
+            <p style="margin-top: 4px; font-size: 0.76rem; color: #BBB;">Trang thực đơn điện tử tối ưu cho điện thoại & máy tính bảng.</p>
+        </div>
+    </footer>
+
+    <!-- ==================== JAVASCRIPT LIBRARIES ==================== -->
+    <!-- 1. Dữ liệu cấu hình & danh sách món (Array Data Object) -->
+    <script src="js/data.js"></script>
+    <!-- 2. Logic xử lý giao diện, tìm kiếm, lọc, gọi điện thoại -->
+    <script src="js/app.js"></script>
+</body>
+</html>
