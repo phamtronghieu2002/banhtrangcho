@@ -123,6 +123,16 @@ function initStoreInfo() {
     } else if (storeBannerWrap) {
         storeBannerWrap.style.display = 'none';
     }
+
+    // Nạp Video giới thiệu quán (nếu có)
+    const storeVideoWrap = document.getElementById('storeVideoWrap');
+    const storeVideoPlayer = document.getElementById('storeVideoPlayer');
+    if (storeVideoWrap && storeVideoPlayer && STORE_CONFIG.video) {
+        storeVideoPlayer.src = STORE_CONFIG.video;
+        storeVideoWrap.style.display = 'block';
+    } else if (storeVideoWrap) {
+        storeVideoWrap.style.display = 'none';
+    }
     
     // Nút gọi điện & liên hệ
     const heroCallBtn = document.getElementById('heroCallBtn');

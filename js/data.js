@@ -10,8 +10,11 @@ const STORE_CONFIG = {
     name: "Bánh Tráng Chờ Ruộng Cạn",
     logo: "https://res.cloudinary.com/dzpj1y0ww/image/upload/v1786196597/banhtrangcho/banhtrangcho_tq6y85.jpg", // Ảnh Logo tròn
 
-    // 👉 ẢNH XE ĐẨY / QUẦY HÀNG CỦA QUÁN (Dán link ảnh xe đẩy của bạn vào đây):
-    banner: "https://res.cloudinary.com/dzpj1y0ww/image/upload/v1786265727/banhtrangcho/banner_qhu246.jpg",
+    // 👉 VIDEO GIỚI THIỆU QUÁN (Đặt file trong thư mục video/ hoặc dán link online):
+    video: "video/introduce.mp4",
+
+    // 👉 ẢNH XE ĐẨY / QUẦY HÀNG CỦA QUÁN (Nếu có):
+    banner: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80",
 
     slogan: "Ăn vặt thả ga - Đậm đà chuẩn vị",
     hotline: "0399069063", // Số điện thoại nhận cuộc gọi đặt món (dạng số liền để gọi tel:)

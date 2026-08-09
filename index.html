@@ -70,6 +70,24 @@
                 </div>
 
 
+                <!-- Video Giới Thiệu Quán (Tự động nạp từ data.js) -->
+                <div class="store-video-wrap" id="storeVideoWrap" style="display: none;">
+                    <div class="store-video-header">
+                        <span class="video-icon">🎬</span>
+                        <span class="video-title">Khám Phá Quán Chúng Mình</span>
+                    </div>
+                    <div class="store-video-container">
+                        <video id="storeVideoPlayer" 
+                               controls 
+                               playsinline 
+                               preload="metadata"
+                               class="store-video-element">
+                            <source src="video/introduce.mp4" type="video/mp4">
+                            Trình duyệt của bạn không hỗ trợ video HTML5.
+                        </video>
+                    </div>
+                </div>
+
                 <!-- Nút Gọi Hotline nhanh ở đầu trang -->
                 <div class="store-actions">
                     <a id="heroCallBtn" href="tel:0988888888" class="btn-call-hero">
