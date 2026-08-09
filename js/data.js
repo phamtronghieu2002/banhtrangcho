@@ -45,7 +45,7 @@ const MENU_ITEMS = [
         name: "Bánh Tráng Trộn",
         category: "banh-trang",
         price: "15k - 20k",
-        image: "images/banh_trang_tron.png",
+        image: "https://www.cet.edu.vn/wp-content/uploads/2018/03/cach-lam-banh-trang-tron.jpg",
         description: "Bánh tráng dẻo thơm, trứng cút, khô bò cay nồng, xoài chua giòn, rau răm và sốt tắc chua ngọt đậm đà chuẩn vị.",
         badge: "Bán Chạy Nhất",
         isAvailable: true
@@ -55,7 +55,7 @@ const MENU_ITEMS = [
         name: "Bánh Tráng Trộn Mỡ Hành",
         category: "banh-trang",
         price: "15k - 20k",
-        image: "images/banh_trang_mo_hanh.png",
+        image: "https://daylambanh.edu.vn/wp-content/uploads/2019/11/banh-trang-mo-hanh-hap-dan-600x337.jpg",
         description: "Bánh tráng phơi sương thấm đẫm mỡ hành phi thơm lừng, béo ngậy kèm tép khô, đậu phộng rang và muối tôm Tây Ninh.",
         badge: "Khuyên Thử",
         isAvailable: true
@@ -65,7 +65,7 @@ const MENU_ITEMS = [
         name: "Bánh Tráng Nướng",
         category: "banh-trang",
         price: "15k",
-        image: "images/banh_trang_nuong.png",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWf86_00biJdBUJYtmmPSndMetazpmO5VYYcAYFbFGq3VsWKmsCGhF-Cnn&s=10",
         description: "Bánh tráng nướng than hồng giòn rụm, trứng gà, xúc xích, phô mai, tép sấy, hành hoa và tương ớt thơm nức mũi.",
         badge: "Hot",
         isAvailable: true
@@ -75,7 +75,7 @@ const MENU_ITEMS = [
         name: "Bánh Tráng Cuộn",
         category: "banh-trang",
         price: "20k",
-        image: "images/banh_trang_cuon.png",
+        image: "https://bizweb.dktcdn.net/100/004/714/files/banh-trang-cuon-bo.png?v=1636078724932",
         description: "Bánh tráng cuốn hành phi giòn tan, trứng cút, khô bò chấm ngập sốt bơ béo ngậy kèm sốt me chua cay cực dính.",
         badge: "Yêu Thích",
         isAvailable: true
@@ -85,7 +85,7 @@ const MENU_ITEMS = [
         name: "Cá Viên Sốt Mắm Tỏi",
         category: "an-vat",
         price: "20k",
-        image: "images/ca_vien_mam_toi.png",
+        image: "https://cdnv2.tgdd.vn/mwg-static/common/Common/%28620%20x%20620%20px%29%20%282%29.jpg",
         description: "Cá viên chiên vàng giòn rụm, đảo đều cùng sốt nước mắm tỏi ớt kẹo dẻo thơm lừng cay cay mặn ngọt.",
         badge: "Hot",
         isAvailable: true
@@ -105,7 +105,7 @@ const MENU_ITEMS = [
         name: "Trứng Cút Nướng",
         category: "an-vat",
         price: "20k",
-        image: "images/trung_cut_nuong.png",
+        image: "https://i.ytimg.com/vi/oQxxyAYrNII/sddefault.jpg",
         description: "Chén trứng cút nướng than hồng béo ngậy, topping xúc xích, hành phi giòn, ruốc sấy và sốt mayonnaise béo thơm.",
         badge: "Yêu Thích",
         isAvailable: true
@@ -115,7 +115,7 @@ const MENU_ITEMS = [
         name: "Mì Trộn Xúc Xích Trứng Cút",
         category: "an-vat",
         price: "20k",
-        image: "images/mi_tron.png",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnSAdMwDW9dWIQNENxZXZkkhT-iTncCUiHXSEmIWFixJaIkVTvm6ijnlqg&s=10",
         description: "Mì sợi dai ngon trộn sốt đặc chế chua cay mặn ngọt, ăn kèm xúc xích, trứng cút, xoài băm và rau thơm.",
         badge: "Món No",
         isAvailable: true
@@ -125,7 +125,7 @@ const MENU_ITEMS = [
         name: "Nui Trộn Thập Cẩm",
         category: "an-vat",
         price: "20k",
-        image: "images/nui_tron.png",
+        image: "https://storage.googleapis.com/onelife-public/blog.onelife.vn/2021/11/cach-lam-nui-xao-thap-cam-dinh-duong-mon-chinh-146583340061.jpg",
         description: "Nui luộc vừa chín tới dẻo mềm, trộn đều cùng sốt gia vị thơm ngon, bò khô, trứng cút, xoài chua và rau răm.",
         badge: "",
         isAvailable: true
@@ -135,7 +135,7 @@ const MENU_ITEMS = [
         name: "Nui Chiên Trứng Giòn Rụm",
         category: "an-vat",
         price: "20k",
-        image: "images/nui_chien.png",
+        image: "https://cdn11.dienmaycholon.vn/filewebdmclnew/DMCL21/Picture/News/News_expe_18970/18970.png?version=082303",
         description: "Nui chiên giòn rụm kết hợp lớp trứng gà vàng óng phủ ngoài, rắc hành lá và chấm kèm nước tương tỏi ớt chua ngọt.",
         badge: "Giòn Rụm",
         isAvailable: true
