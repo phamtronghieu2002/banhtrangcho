@@ -127,13 +127,67 @@ function initStoreInfo() {
     // Nạp Video giới thiệu quán (nếu có)
     const storeVideoWrap = document.getElementById('storeVideoWrap');
     const storeVideoPlayer = document.getElementById('storeVideoPlayer');
+    const unmuteVideoBtn = document.getElementById('unmuteVideoBtn');
+    const unmuteFloatingBtn = document.getElementById('unmuteFloatingBtn');
+
     if (storeVideoWrap && storeVideoPlayer && STORE_CONFIG.video) {
         storeVideoPlayer.src = STORE_CONFIG.video;
         storeVideoWrap.style.display = 'block';
+        
+        // Tự động phát khi tải trang (trình duyệt bắt buộc muted = true để autoplay)
+        storeVideoPlayer.muted = true;
+        const playPromise = storeVideoPlayer.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(() => {});
+        }
+
+        const toggleSound = () => {
+            storeVideoPlayer.muted = !storeVideoPlayer.muted;
+            if (!storeVideoPlayer.muted) {
+                if (unmuteVideoBtn) unmuteVideoBtn.innerHTML = '🔇 Tắt Âm Thanh';
+                if (unmuteFloatingBtn) unmuteFloatingBtn.classList.add('hidden');
+                storeVideoPlayer.play().catch(() => {});
+            } else {
+                if (unmuteVideoBtn) unmuteVideoBtn.innerHTML = '🔊 Bật Âm Thanh';
+                if (unmuteFloatingBtn) unmuteFloatingBtn.classList.remove('hidden');
+            }
+        };
+
+        if (unmuteVideoBtn) {
+            unmuteVideoBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleSound();
+            });
+        }
+
+        if (unmuteFloatingBtn) {
+            unmuteFloatingBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleSound();
+            });
+        }
+
+        // Tự động mở tiếng khi người dùng tương tác lần đầu với video
+        storeVideoPlayer.addEventListener('click', () => {
+            if (storeVideoPlayer.muted) {
+                toggleSound();
+            }
+        });
     } else if (storeVideoWrap) {
         storeVideoWrap.style.display = 'none';
     }
     
+    // Nút cuộn nhanh xuống thực đơn
+    const scrollToMenuBtn = document.getElementById('scrollToMenuBtn');
+    if (scrollToMenuBtn) {
+        scrollToMenuBtn.addEventListener('click', () => {
+            const menuControlsEl = document.getElementById('menuControls') || document.getElementById('menuGrid');
+            if (menuControlsEl) {
+                menuControlsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    }
+
     // Nút gọi điện & liên hệ
     const heroCallBtn = document.getElementById('heroCallBtn');
     const floatCallBtn = document.getElementById('floatCallBtn');

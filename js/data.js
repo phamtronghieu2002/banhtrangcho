@@ -14,7 +14,7 @@ const STORE_CONFIG = {
     video: "video/introduce.mp4",
 
     // 👉 ẢNH XE ĐẨY / QUẦY HÀNG CỦA QUÁN (Nếu có):
-    banner: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80",
+    banner: "https://res.cloudinary.com/dzpj1y0ww/image/upload/v1786276302/banhtrangcho/banner3_u7gco4.png",
 
     slogan: "Ăn vặt thả ga - Đậm đà chuẩn vị",
     hotline: "0399069063", // Số điện thoại nhận cuộc gọi đặt món (dạng số liền để gọi tel:)
