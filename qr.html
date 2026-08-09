@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo Mã QR & Standee Để Bàn - Bánh Tráng Chờ</title>
+
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Thư viện tạo QR Code siêu nhẹ & sắc nét -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #FF5E14;
+            --primary-hover: #E04E0B;
+            --primary-gradient: linear-gradient(135deg, #FF5E14 0%, #FF8A3D 100%);
+            --dark: #1A1A1A;
+            --dark-muted: #4B5563;
+            --light-bg: #F8F9FA;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --radius-full: 9999px;
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 14px 36px rgba(255, 94, 20, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--dark);
+            padding: 24px 16px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Top Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .page-title {
+            font-size: clamp(1.4rem, 4vw, 1.85rem);
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 6px;
+        }
+
+        .page-subtitle {
+            font-size: 0.95rem;
+            color: var(--dark-muted);
+        }
+
+        .nav-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 14px;
+            transition: transform 0.2s ease;
+        }
+
+        .nav-back:hover {
+            transform: translateX(-4px);
+        }
+
+        /* Grid Bố Cục 2 Cột */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        @media (min-width: 768px) {
+            .main-grid {
+                grid-template-columns: 1fr 1fr;
+                align-items: start;
+            }
+        }
+
+        /* Card Cấu Hình Link */
+        .control-card {
+            background: #fff;
+            padding: 24px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            border: 1px solid #EAEAEA;
+        }
+
+        .control-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 6px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: var(--radius-md);
+            border: 1.5px solid #E2E8F0;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 94, 20, 0.15);
+        }
+
+        .btn-generate {
+            width: 100%;
+            background: var(--primary-gradient);
+            color: #fff;
+            border: none;
+            padding: 13px;
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.2s ease;
+        }
+
+        .btn-generate:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Khung Mẫu Standee Dán Bàn / Để Bàn (Table Card) */
+        .preview-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .standee-card {
+            width: 100%;
+            max-width: 340px;
+            background: #fff;
+            border-radius: 24px;
+            padding: 24px 20px;
+            box-shadow: var(--shadow-md);
+            border: 2px solid #FFE4D6;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .standee-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: var(--primary-gradient);
+        }
+
+        .standee-logo {
+            font-size: 2.2rem;
+            margin-bottom: 4px;
+        }
+
+        .standee-store-name {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--dark);
+            line-height: 1.2;
+        }
+
+        .standee-table-badge {
+            display: inline-block;
+            background: #FFF2EB;
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 0.88rem;
+            padding: 4px 14px;
+            border-radius: var(--radius-full);
+            margin: 8px 0 14px 0;
+        }
+
+        .qr-box-wrap {
+            background: #FAFAFA;
+            padding: 16px;
+            border-radius: var(--radius-md);
+            border: 2px dashed #FFD0B8;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        /* Chỉ hiển thị 1 mã QR duy nhất (ẩn canvas nội bộ của thư viện QRCode.js) */
+        #qrcodeCanvas canvas {
+            display: none !important;
+        }
+
+        #qrcodeCanvas img {
+            display: block !important;
+            margin: 0 auto;
+            border-radius: 8px;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .standee-prompt {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+
+        .standee-sub {
+            font-size: 0.8rem;
+            color: var(--dark-muted);
+            margin-bottom: 12px;
+        }
+
+        .standee-wifi-info {
+            background: #FFF9E6;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 0.78rem;
+            color: #8C5B00;
+            border: 1px solid rgba(255, 179, 0, 0.3);
+            text-align: center;
+        }
+
+        /* Action Buttons bên dưới Standee */
+        .actions-group {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            max-width: 340px;
+            margin-top: 16px;
+        }
+
+        .btn-action {
+            flex: 1;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            font-size: 0.88rem;
+            font-weight: 750;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-download {
+            background: #10B981;
+            color: #fff;
+            border: none;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
+        }
+
+        .btn-download:hover {
+            background: #059669;
+        }
+
+        .btn-print {
+            background: #1E293B;
+            color: #fff;
+            border: none;
+            box-shadow: 0 4px 14px rgba(30, 41, 59, 0.2);
+        }
+
+        .btn-print:hover {
+            background: #0F172A;
+        }
+
+        /* Print Media Styles (Khi bấm In Standee ra giấy) */
+        @media print {
+            body {
+                background: #fff;
+                padding: 0;
+            }
+
+            .page-header,
+            .control-card,
+            .actions-group,
+            .nav-back {
+                display: none !important;
+            }
+
+            .main-grid {
+                display: block;
+            }
+
+            .preview-wrapper {
+                margin: 40px auto;
+            }
+
+            .standee-card {
+                border: 2px solid #FF5E14;
+                box-shadow: none;
+                max-width: 380px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Back to Menu -->
+        <a href="index.html" class="nav-back">← Quay Lại Menu Thực Đơn</a>
+
+        <!-- Header -->
+        <header class="page-header">
+            <h1 class="page-title">📱 Trình Tạo Mã QR & Mẫu Để Bàn</h1>
+            <p class="page-subtitle">Nhập đường link website của bạn để tạo mã QR dán bàn cho khách quét</p>
+        </header>
+
+        <div class="main-grid">
+            <!-- Cột 1: Cấu hình URL & Thông tin bàn -->
+            <div class="control-card">
+                <h2 class="control-title">⚙️ Cấu Hình Mã QR</h2>
+
+                <div class="form-group">
+                    <label class="form-label" for="websiteUrl">🔗 Link Website Của Bạn (Đã deploy):</label>
+                    <input type="url" id="websiteUrl" class="form-input"
+                        placeholder="https://tenquan.vercel.app hoặc https://domain.com" value="">
+                    <small style="color: #6B7280; font-size: 0.76rem; display: block; margin-top: 4px;">
+                        💡 Ví dụ link bạn đã deploy trên Vercel / Netlify / GitHub Pages hoặc tên miền riêng.
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="tableName">🏷️ Tên / Số Bàn (Tùy chọn):</label>
+                    <input type="text" id="tableName" class="form-input"
+                        placeholder="Ví dụ: Bàn 01, Bàn VIP, Mang Về..." value="Bàn Số 01">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="qrSize">📐 Kích Thước Mã QR:</label>
+                    <select id="qrSize" class="form-input">
+                        <option value="180">Chuẩn (180 x 180 px)</option>
+                        <option value="220" selected>Rõ Nét (220 x 220 px)</option>
+                        <option value="300">Siêu Nét Để In Lớn (300 x 300 px)</option>
+                    </select>
+                </div>
+
+                <button type="button" id="btnGenerate" class="btn-generate">
+                    ✨ Cập Nhật Mã QR & Mẫu Bàn
+                </button>
+            </div>
+
+                <div class="standee-card" id="standeePrintArea">
+                    <div class="standee-logo" style="margin-bottom: 8px;">
+                        <img src="https://res.cloudinary.com/dzpj1y0ww/image/upload/v1786196597/banhtrangcho/banhtrangcho_tq6y85.jpg"
+                             alt="Logo Quán"
+                             style="width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 2.5px solid #FF5E14; display: inline-block; box-shadow: 0 4px 12px rgba(255, 94, 20, 0.2);">
+                    </div>
+                    <h3 class="standee-store-name" id="previewStoreName">Bánh Tráng Chờ</h3>
+                    <div class="standee-table-badge" id="previewTableBadge">Bàn Số 01</div>
+
+                    <!-- Nơi render mã QR -->
+                    <div class="qr-box-wrap">
+                        <div id="qrcodeCanvas"></div>
+                    </div>
+
+                    <div class="standee-prompt">📸 Quét Mã Để Xem Menu & Đặt Món</div>
+                    <p class="standee-sub">Mở camera điện thoại hoặc ứng dụng Zalo quét mã</p>
+
+                    <div class="standee-wifi-info">
+                        📶 <b>WiFi:</b> <span id="previewWifi">BanhTrangCho_FreeWifi</span> | <b>Pass:</b> <span
+                            id="previewPass">banhtrangngonlam</span>
+                    </div>
+                </div>
+
+                <!-- Nút Tải Ảnh & In -->
+                <div class="actions-group">
+                    <button type="button" id="btnDownloadQR" class="btn-action btn-download"
+                        title="Tải file ảnh QR về máy">
+                        ⬇️ Tải Ảnh QR
+                    </button>
+                    <button type="button" id="btnPrintStandee" class="btn-action btn-print"
+                        title="In trực tiếp mẫu thẻ để bàn">
+                        🖨️ In Mẫu Dán Bàn
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nạp dữ liệu cấu hình quán từ js/data.js -->
+    <script src="js/data.js"></script>
+
+    <script>
+        let qrcodeInstance = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlInput = document.getElementById('websiteUrl');
+            const tableInput = document.getElementById('tableName');
+            const sizeSelect = document.getElementById('qrSize');
+            const btnGenerate = document.getElementById('btnGenerate');
+            const btnDownloadQR = document.getElementById('btnDownloadQR');
+            const btnPrintStandee = document.getElementById('btnPrintStandee');
+
+            const previewStoreName = document.getElementById('previewStoreName');
+            const previewTableBadge = document.getElementById('previewTableBadge');
+            const previewWifi = document.getElementById('previewWifi');
+            const previewPass = document.getElementById('previewPass');
+
+            // Tự động điền thông tin từ STORE_CONFIG
+            if (typeof STORE_CONFIG !== 'undefined') {
+                if (previewStoreName) previewStoreName.textContent = STORE_CONFIG.name;
+                if (STORE_CONFIG.wifi) {
+                    if (previewWifi) previewWifi.textContent = STORE_CONFIG.wifi.ssid;
+                    if (previewPass) previewPass.textContent = STORE_CONFIG.wifi.password;
+                }
+            }
+
+            // Tự động lấy URL thư mục gốc sạch sẽ làm mặc định
+            let cleanUrl = window.location.href.split('?')[0].split('#')[0];
+            cleanUrl = cleanUrl.substring(0, cleanUrl.lastIndexOf('/') + 1);
+            if (!cleanUrl || cleanUrl.startsWith('file')) {
+                cleanUrl = 'https://banhtrangcho.menu/';
+            }
+
+            urlInput.value = cleanUrl;
+
+            // Hàm tạo mã QR
+            function makeQRCode() {
+                const targetUrl = urlInput.value.trim() || 'https://banhtrangcho.menu';
+                const tableVal = tableInput.value.trim();
+                const size = parseInt(sizeSelect.value, 10) || 220;
+
+                // Cập nhật text badge số bàn
+                if (tableVal) {
+                    previewTableBadge.textContent = tableVal;
+                    previewTableBadge.style.display = 'inline-block';
+                } else {
+                    previewTableBadge.style.display = 'none';
+                }
+
+                // Xóa QR cũ
+                const qrContainer = document.getElementById('qrcodeCanvas');
+                qrContainer.innerHTML = '';
+
+                // Tạo QR mới bằng QRCode.js
+                qrcodeInstance = new QRCode(qrContainer, {
+                    text: targetUrl,
+                    width: size,
+                    height: size,
+                    colorDark: "#1A1A1A",
+                    colorLight: "#FFFFFF",
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+            }
+
+            // Khởi tạo lần đầu
+            makeQRCode();
+
+            // Bắt sự kiện bấm nút Tạo / Cập nhật
+            btnGenerate.addEventListener('click', makeQRCode);
+
+            // Bắt sự kiện gõ phím
+            urlInput.addEventListener('change', makeQRCode);
+            tableInput.addEventListener('input', () => {
+                previewTableBadge.textContent = tableInput.value.trim() || 'Bàn Quán Ăn';
+            });
+            sizeSelect.addEventListener('change', makeQRCode);
+
+            // Tải ảnh QR Code (PNG)
+            btnDownloadQR.addEventListener('click', () => {
+                const qrImg = document.querySelector('#qrcodeCanvas img');
+                const qrCanvas = document.querySelector('#qrcodeCanvas canvas');
+
+                let dataUrl = '';
+                if (qrImg && qrImg.src) {
+                    dataUrl = qrImg.src;
+                } else if (qrCanvas) {
+                    dataUrl = qrCanvas.toDataURL('image/png');
+                }
+
+                if (dataUrl) {
+                    const link = document.createElement('a');
+                    link.download = `QR_Code_${tableInput.value.trim().replace(/\\s+/g, '_') || 'Menu'}.png`;
+                    link.href = dataUrl;
+                    link.click();
+                } else {
+                    alert('Vui lòng đợi mã QR tạo xong rồi thử lại nhé!');
+                }
+            });
+
+            // In Mẫu Standee Dán Bàn
+            btnPrintStandee.addEventListener('click', () => {
+                window.print();
+            });
+        });
+    </script>
+</body>
+
+</html>
