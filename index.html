@@ -26,16 +26,25 @@
         <div class="container">
             <div class="store-card">
                 <div class="store-top">
-                    <div class="store-logo" aria-label="Logo quán">
-                        🌯
+                    <div class="store-logo" aria-label="Logo quán" style="overflow: hidden; padding: 0;">
+                        <img id="storeLogoImg"
+                            src="https://res.cloudinary.com/dzpj1y0ww/image/upload/v1786196597/banhtrangcho/banhtrangcho_tq6y85.jpg"
+                            alt="Logo Quán"
+                            style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block;">
                     </div>
                     <div class="store-title-wrap">
                         <div class="store-status">
                             <span class="status-dot"></span> Đang Mở Cửa Phục Vụ
                         </div>
-                        <h1 class="store-name" id="storeName">Bánh Tráng Chờ</h1>
+                        <h1 class="store-name" id="storeName">Bánh Tráng chờ ruộng cạn</h1>
                         <p class="store-slogan" id="storeSlogan">Ăn vặt thả ga - Đậm đà chuẩn vị</p>
                     </div>
+                </div>
+
+                <!-- Ảnh Xe Đẩy / Không Gian Quán Thực Tế (Tự động nạp từ data.js) -->
+                <div class="store-banner-wrap" id="storeBannerWrap" style="display: none;">
+                    <img id="storeBannerImg" src="" alt="Xe Bánh Tráng Phục Vụ" class="store-banner-img">
+                    <!-- <span class="store-banner-badge">🛵 Xe Bánh Tráng Phục Vụ Tại Quán</span> -->
                 </div>
 
                 <!-- Chi tiết: Địa chỉ, Giờ giấc & Bản đồ -->
@@ -45,19 +54,19 @@
                         <div>
                             <span id="storeAddress">123 Đường Ăn Vặt, Quận 1, TP. Hồ Chí Minh</span>
                             <br>
-                            <a id="storeMapLink" href="https://maps.google.com" target="_blank"
+                            <!-- <a id="storeMapLink" href="https://maps.google.com" target="_blank"
                                 rel="noopener noreferrer">
                                 🗺️ Xem vị trí trên Bản Đồ Google Maps &rarr;
-                            </a>
+                            </a> -->
                         </div>
                     </div>
-                    <div class="detail-item">
+                    <!-- <div class="detail-item">
                         <span class="icon">⏰</span>
                         <div>
                             <span>Giờ phục vụ:</span><br>
                             <strong id="storeHours">09:30 - 22:30 hàng ngày</strong>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
 
@@ -156,7 +165,12 @@
     <footer class="page-footer">
         <div class="container">
             <p>© 2026 <strong id="copyrightStore">Bánh Tráng Chờ</strong>. Quét mã QR - Thưởng thức trọn vẹn.</p>
-            <p style="margin-top: 4px; font-size: 0.76rem; color: #BBB;">Trang thực đơn điện tử tối ưu cho điện thoại &
+            <p style="margin-top: 6px; font-size: 0.8rem;">
+                <a href="qr.html" style="color: var(--primary); font-weight: 700; text-decoration: underline;">
+                    📱 In Standee & Tạo Mã QR Dán Bàn Tại Đây &rarr;
+                </a>
+            </p>
+            <p style="margin-top: 4px; font-size: 0.74rem; color: #BBB;">Trang thực đơn điện tử tối ưu cho điện thoại &
                 máy tính bảng.</p>
         </div>
     </footer>
