@@ -99,7 +99,10 @@ document.addEventListener('DOMContentLoaded', () => {
 function initStoreInfo() {
     if (typeof STORE_CONFIG === 'undefined') return;
 
-    // Tên quán, slogan, địa chỉ, giờ
+    // Tên quán, logo, banner xe đẩy, slogan, địa chỉ, giờ
+    const storeLogoImg = document.getElementById('storeLogoImg');
+    const storeBannerWrap = document.getElementById('storeBannerWrap');
+    const storeBannerImg = document.getElementById('storeBannerImg');
     const storeNameEl = document.getElementById('storeName');
     const storeSloganEl = document.getElementById('storeSlogan');
     const storeAddressEl = document.getElementById('storeAddress');
@@ -107,6 +110,19 @@ function initStoreInfo() {
     const storeMapLinkEl = document.getElementById('storeMapLink');
     const wifiSsidEl = document.getElementById('wifiSsid');
     const wifiPassEl = document.getElementById('wifiPass');
+    
+    // Nạp logo
+    if (storeLogoImg && STORE_CONFIG.logo) {
+        storeLogoImg.src = STORE_CONFIG.logo;
+    }
+
+    // Nạp ảnh xe đẩy / không gian quán (nếu có)
+    if (storeBannerWrap && storeBannerImg && STORE_CONFIG.banner) {
+        storeBannerImg.src = STORE_CONFIG.banner;
+        storeBannerWrap.style.display = 'block';
+    } else if (storeBannerWrap) {
+        storeBannerWrap.style.display = 'none';
+    }
     
     // Nút gọi điện & liên hệ
     const heroCallBtn = document.getElementById('heroCallBtn');
