@@ -11,15 +11,15 @@ const STORE_CONFIG = {
     logo: "https://res.cloudinary.com/dzpj1y0ww/image/upload/v1786196597/banhtrangcho/banhtrangcho_tq6y85.jpg", // Ảnh Logo tròn
 
     // 👉 ẢNH XE ĐẨY / QUẦY HÀNG CỦA QUÁN (Dán link ảnh xe đẩy của bạn vào đây):
-    banner: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80",
+    banner: "https://res.cloudinary.com/dzpj1y0ww/image/upload/v1786265446/banhtrangcho/backgroud_wsejzu.jpg",
 
     slogan: "Ăn vặt thả ga - Đậm đà chuẩn vị",
-    hotline: "0988888888", // Số điện thoại nhận cuộc gọi đặt món (dạng số liền để gọi tel:)
-    hotlineDisplay: "0988.888.888", // Số hiển thị đẹp mắt
+    hotline: "0399069063", // Số điện thoại nhận cuộc gọi đặt món (dạng số liền để gọi tel:)
+    hotlineDisplay: "0399.069.063", // Số hiển thị đẹp mắt
     address: "123 Đường Ăn Vặt, Phường Bến Nghé, Quận 1, TP. Hồ Chí Minh",
     mapUrl: "https://maps.google.com/?q=Quán+Bánh+Tráng+Chờ+Quận+1", // Link xem bản đồ / chỉ đường
     openHours: "09:30 - 22:30 hàng ngày",
-    zaloPhone: "0988888888", // Số Zalo đặt hàng / tư vấn
+    zaloPhone: "0399069063", // Số Zalo đặt hàng / tư vấn
     wifi: {
         ssid: "BanhTrangCho_FreeWifi",
         password: "banhtrangngonlam"
