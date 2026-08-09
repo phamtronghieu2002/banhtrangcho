@@ -16,7 +16,7 @@ const STORE_CONFIG = {
     slogan: "Ăn vặt thả ga - Đậm đà chuẩn vị",
     hotline: "0399069063", // Số điện thoại nhận cuộc gọi đặt món (dạng số liền để gọi tel:)
     hotlineDisplay: "0399.069.063", // Số hiển thị đẹp mắt
-    address: "123 Đường Ăn Vặt, Phường Bến Nghé, Quận 1, TP. Hồ Chí Minh",
+    address: "Ruộng cạn tân hoà",
     mapUrl: "https://maps.google.com/?q=Quán+Bánh+Tráng+Chờ+Quận+1", // Link xem bản đồ / chỉ đường
     openHours: "09:30 - 22:30 hàng ngày",
     zaloPhone: "0399069063", // Số Zalo đặt hàng / tư vấn
