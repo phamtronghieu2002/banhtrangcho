@@ -58,7 +58,7 @@ const MENU_ITEMS = [
         id: 1,
         name: "Bánh Tráng Trộn",
         category: "banh-trang",
-        price: "15k - 25k",
+        price: "15k-20k-25k",
         image: "https://www.cet.edu.vn/wp-content/uploads/2018/03/cach-lam-banh-trang-tron.jpg",
         description: "Bánh tráng dẻo thơm, trứng cút, khô bò cay nồng, xoài chua giòn, rau răm và sốt tắc chua ngọt...",
         isAvailable: true

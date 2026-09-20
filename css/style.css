@@ -97,6 +97,70 @@ button {
     padding: 0 16px;
 }
 
+/* ==================== 0. TOP ANNOUNCEMENT BAR ==================== */
+.top-announcement-bar {
+    background: linear-gradient(90deg, #FEF2F2 0%, #FFF7ED 50%, #ECFDF5 100%);
+    border-bottom: 1px solid #FEE2E2;
+    padding: 9px 0;
+    font-size: 0.86rem;
+}
+
+.announcement-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.announcement-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: var(--primary);
+    color: #FFFFFF;
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: var(--radius-full);
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 6px rgba(229, 46, 46, 0.25);
+}
+
+.announcement-text {
+    color: #1F2937;
+    font-size: 0.86rem;
+}
+
+.announcement-text strong {
+    color: #B91C1C;
+    font-weight: 700;
+}
+
+.announcement-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background-color: #FFFFFF;
+    color: #B91C1C;
+    border: 1px solid #FECACA;
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: var(--transition);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.announcement-cta:hover {
+    background-color: var(--primary);
+    color: #FFFFFF;
+    border-color: var(--primary);
+    transform: translateY(-1px);
+}
+
 /* ==================== 1. TOP NAVIGATION BAR ==================== */
 .top-nav-bar {
     background-color: #FFFFFF;
@@ -510,7 +574,9 @@ button {
 
 /* ==================== 3. SERVICE STRIP CARD (BẢO TUỆ GREEN CAR) ==================== */
 .service-strip-section {
-    padding: 10px 0 24px 0;
+    padding: 24px 0 40px 0;
+    border-top: 1px solid var(--border-light);
+    background: linear-gradient(180deg, #FFFFFF 0%, #FAFBFD 100%);
 }
 
 .service-card-clean {
@@ -1585,9 +1651,33 @@ button {
         font-size: 0.74rem;
     }
 
+    /* Top Announcement Bar on Mobile */
+    .top-announcement-bar {
+        padding: 7px 0;
+    }
+
+    .announcement-inner {
+        gap: 6px 8px;
+        justify-content: center;
+    }
+
+    .announcement-badge {
+        font-size: 0.68rem;
+        padding: 2px 8px;
+    }
+
+    .announcement-text {
+        font-size: 0.75rem;
+    }
+
+    .announcement-cta {
+        font-size: 0.72rem;
+        padding: 2px 8px;
+    }
+
     /* Bảo Tuệ Green Car Card on Mobile */
     .service-strip-section {
-        padding: 8px 0 16px 0;
+        padding: 16px 0 24px 0;
     }
 
     .service-card-clean {
