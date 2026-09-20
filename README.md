@@ -46,20 +46,20 @@ Mở file `js/data.js` và chỉnh sửa mục `STORE_CONFIG`:
 
 ```javascript
 const STORE_CONFIG = {
-    name: "Bánh Tráng Chờ Ruộng Cạn",                 // Tên quán của bạn
+    name: "Bánh Tráng Chờ",                          // Tên quán của bạn
     
     // 👉 ẢNH LOGO TRÒN Ở ĐẦU TRANG:
-    logo: "https://res.cloudinary.com/dzpj1y0ww/image/upload/v1786196597/banhtrangcho/banhtrangcho_tq6y85.jpg",
+    logo: "https://res.cloudinary.com/dzpj1y0ww/image/upload/v1789880973/logo_hdfzqr.jpg",
     
     // 👉 VIDEO GIỚI THIỆU QUÁN (Để file trong folder video/ hoặc điền link):
-    video: "video/introduce.mp4",                     // Để trống "" nếu không muốn hiện video
+    video: "https://res.cloudinary.com/dzpj1y0ww/video/upload/v1789880973/ideo_eyzzkf.mp4",                     // Để trống "" nếu không muốn hiện video
     
     // 👉 ẢNH XE ĐẨY / QUẦY BÁNH TRÁNG THỰC TẾ (Để trống "" nếu không muốn hiện):
     banner: "https://link-anh-xe-day-cua-ban.jpg",
     
     slogan: "Ăn vặt thả ga - Đậm đà chuẩn vị",       // Slogan
-    hotline: "0988888888",                           // Số điện thoại để gọi đặt món
-    hotlineDisplay: "0988.888.888",                  // Số hiển thị đẹp mắt trên giao diện
+    hotline: "0399069063",                           // Số điện thoại để gọi đặt món
+    hotlineDisplay: "0399.069.063",                  // Số hiển thị đẹp mắt trên giao diện
     address: "123 Đường Ăn Vặt, Quận 1, TP. HCM",   // Địa chỉ quán
     mapUrl: "https://maps.google.com/?q=...",        // Link Google Maps
     openHours: "09:30 - 22:30 hàng ngày",           // Giờ mở cửa

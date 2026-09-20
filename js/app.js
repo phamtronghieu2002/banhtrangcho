@@ -1,47 +1,28 @@
 /**
  * ==============================================================================
- * LOGIC ĐIỀU KHIỂN MENU QR & TƯƠNG TÁC (APP.JS)
- * Tối ưu 100% chống vỡ chữ, responsive mượt mà trên mọi thiết bị
+ * BÁNH TRÁNG CHỜ - GÒ CÔNG
+ * APP.JS - INTERACTIVE CONTROLLER WITH FONTAWESOME
  * ==============================================================================
  */
 
-// Trạng thái ứng dụng
+// Application State
 let currentCategory = 'all';
 let searchQuery = '';
-let toastTimeout = null;
 
-// Helper format tiền tệ Việt Nam (Hỗ trợ linh hoạt cả String và Number)
-// Ví dụ: "30.000đ", "30k", "25.000 - 35.000đ", "Theo thời giá", hoặc số 30000
-function formatCurrency(price) {
-    if (price === null || price === undefined) return '';
-    
-    // Nếu là String
-    if (typeof price === 'string') {
-        const trimmed = price.trim();
-        // Nếu là string thuần số (ví dụ: "30000") thì tự thêm định dạng chuẩn .000đ
-        if (!isNaN(trimmed) && trimmed !== '') {
-            return new Intl.NumberFormat('vi-VN').format(Number(trimmed)) + 'đ';
-        }
-        // Nếu chuỗi đã được định dạng sẵn (ví dụ: "30.000đ", "30k", "25.000đ - 35.000đ")
-        return trimmed;
-    }
-    
-    // Nếu là Number
-    if (typeof price === 'number') {
-        return new Intl.NumberFormat('vi-VN').format(price) + 'đ';
-    }
-    
-    return String(price);
+// Helper format giá
+function formatPrice(price) {
+    if (!price) return '';
+    return String(price).trim();
 }
 
-// Helper loại bỏ dấu tiếng Việt để tìm kiếm thông minh
+// Helper bỏ dấu tiếng Việt tìm kiếm thông minh
 function removeVietnameseTones(str) {
     if (!str) return '';
     str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
     str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
     str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
     str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
-    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|Ữ/g, "u");
+    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
     str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
     str = str.replace(/đ/g, "d");
     str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
@@ -54,293 +35,268 @@ function removeVietnameseTones(str) {
     return str.toLowerCase().trim();
 }
 
-// Hiển thị Toast thông báo ngắn gọn & tự ẩn sạch sẽ
-function showToast(message) {
-    let toast = document.getElementById('toastNotification');
-    if (!toast) {
-        toast = document.createElement('div');
-        toast.id = 'toastNotification';
-        toast.className = 'toast-box';
-        document.body.appendChild(toast);
-    }
-    
-    if (toastTimeout) {
-        clearTimeout(toastTimeout);
-    }
-
-    toast.innerHTML = `<span>✨</span> <span>${message}</span>`;
-    toast.style.display = 'inline-flex';
-    
-    // Trigger reflow để kích hoạt CSS transition
-    void toast.offsetWidth;
-    toast.classList.add('show');
-    
-    toastTimeout = setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => {
-            if (!toast.classList.contains('show')) {
-                toast.style.display = 'none';
-            }
-        }, 300);
-    }, 2200);
-}
-
-// Khởi chạy khi DOM sẵn sàng
+// Khởi tạo ứng dụng
 document.addEventListener('DOMContentLoaded', () => {
-    initStoreInfo();
+    initStoreData();
     renderCategories();
     renderMenuItems();
-    setupEventListeners();
+    setupEvents();
+    setupVideoAudio();
 });
 
 /**
- * 1. Đổ dữ liệu thông tin quán từ STORE_CONFIG trong data.js vào giao diện
+ * 1. Nạp dữ liệu quán từ STORE_CONFIG
  */
-function initStoreInfo() {
+function initStoreData() {
     if (typeof STORE_CONFIG === 'undefined') return;
 
-    // Tên quán, logo, banner xe đẩy, slogan, địa chỉ, giờ
+    // Logo & Slogan
     const storeLogoImg = document.getElementById('storeLogoImg');
-    const storeBannerWrap = document.getElementById('storeBannerWrap');
-    const storeBannerImg = document.getElementById('storeBannerImg');
-    const storeNameEl = document.getElementById('storeName');
-    const storeSloganEl = document.getElementById('storeSlogan');
-    const storeAddressEl = document.getElementById('storeAddress');
-    const storeHoursEl = document.getElementById('storeHours');
-    const storeMapLinkEl = document.getElementById('storeMapLink');
-    const wifiSsidEl = document.getElementById('wifiSsid');
-    const wifiPassEl = document.getElementById('wifiPass');
-    
-    // Nạp logo
-    if (storeLogoImg && STORE_CONFIG.logo) {
-        storeLogoImg.src = STORE_CONFIG.logo;
+    const storeName = document.getElementById('storeName');
+    const storeSlogan = document.getElementById('storeSlogan');
+    const storeHours = document.getElementById('storeHours');
+    const storeHotlineText = document.getElementById('storeHotlineText');
+    const navHotlineBtn = document.getElementById('navHotlineBtn');
+    const navZaloBtn = document.getElementById('navZaloBtn');
+    const navTiktokLink = document.getElementById('navTiktokLink');
+    const navFbLink = document.getElementById('navFbLink');
+
+    if (storeLogoImg && STORE_CONFIG.logo) storeLogoImg.src = STORE_CONFIG.logo;
+    if (storeName) storeName.textContent = STORE_CONFIG.name;
+    if (storeSlogan) storeSlogan.textContent = STORE_CONFIG.slogan;
+    if (storeHours) storeHours.textContent = STORE_CONFIG.openHours;
+    if (storeHotlineText) storeHotlineText.textContent = STORE_CONFIG.hotlineDisplay || STORE_CONFIG.hotline;
+    if (navHotlineBtn) navHotlineBtn.href = `tel:${STORE_CONFIG.hotline}`;
+    if (navZaloBtn && STORE_CONFIG.zaloUrl) navZaloBtn.href = STORE_CONFIG.zaloUrl;
+
+    if (STORE_CONFIG.socialLinks) {
+        if (navTiktokLink && STORE_CONFIG.socialLinks.tiktok) navTiktokLink.href = STORE_CONFIG.socialLinks.tiktok;
+        if (navFbLink && STORE_CONFIG.socialLinks.facebook) navFbLink.href = STORE_CONFIG.socialLinks.facebook;
     }
 
-    // Nạp ảnh xe đẩy / không gian quán (nếu có)
-    if (storeBannerWrap && storeBannerImg && STORE_CONFIG.banner) {
-        storeBannerImg.src = STORE_CONFIG.banner;
-        storeBannerWrap.style.display = 'block';
-    } else if (storeBannerWrap) {
-        storeBannerWrap.style.display = 'none';
-    }
-
-    // Nạp Video giới thiệu quán (nếu có)
-    const storeVideoWrap = document.getElementById('storeVideoWrap');
+    // Video giới thiệu quán
     const storeVideoPlayer = document.getElementById('storeVideoPlayer');
-    const unmuteVideoBtn = document.getElementById('unmuteVideoBtn');
-    const unmuteFloatingBtn = document.getElementById('unmuteFloatingBtn');
-
-    if (storeVideoWrap && storeVideoPlayer && STORE_CONFIG.video) {
-        storeVideoPlayer.src = STORE_CONFIG.video;
-        storeVideoWrap.style.display = 'block';
-        
-        // Tự động phát khi tải trang (trình duyệt bắt buộc muted = true để autoplay)
-        storeVideoPlayer.muted = true;
-        const playPromise = storeVideoPlayer.play();
-        if (playPromise !== undefined) {
-            playPromise.catch(() => {});
-        }
-
-        const toggleSound = () => {
-            storeVideoPlayer.muted = !storeVideoPlayer.muted;
-            if (!storeVideoPlayer.muted) {
-                if (unmuteVideoBtn) unmuteVideoBtn.innerHTML = '🔇 Tắt Âm Thanh';
-                if (unmuteFloatingBtn) unmuteFloatingBtn.classList.add('hidden');
-                storeVideoPlayer.play().catch(() => {});
-            } else {
-                if (unmuteVideoBtn) unmuteVideoBtn.innerHTML = '🔊 Bật Âm Thanh';
-                if (unmuteFloatingBtn) unmuteFloatingBtn.classList.remove('hidden');
+    if (storeVideoPlayer && STORE_CONFIG.video) {
+        const videoSource = storeVideoPlayer.querySelector('source');
+        if (videoSource) {
+            if (videoSource.src !== STORE_CONFIG.video) {
+                videoSource.src = STORE_CONFIG.video;
+                storeVideoPlayer.load();
             }
-        };
-
-        if (unmuteVideoBtn) {
-            unmuteVideoBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                toggleSound();
-            });
+        } else {
+            storeVideoPlayer.src = STORE_CONFIG.video;
         }
+    }
 
-        if (unmuteFloatingBtn) {
-            unmuteFloatingBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                toggleSound();
-            });
+    // Dịch vụ xe điện Bảo Tuệ Green Car
+    const carFeatureImg = document.getElementById('carFeatureImg');
+    const carCallBtn = document.getElementById('carCallBtn');
+    const carZaloBtn = document.getElementById('carZaloBtn');
+
+    if (STORE_CONFIG.electricCarService) {
+        if (carFeatureImg && STORE_CONFIG.electricCarService.image) {
+            carFeatureImg.src = STORE_CONFIG.electricCarService.image;
         }
-
-        // Tự động mở tiếng khi người dùng tương tác lần đầu với video
-        storeVideoPlayer.addEventListener('click', () => {
-            if (storeVideoPlayer.muted) {
-                toggleSound();
-            }
-        });
-    } else if (storeVideoWrap) {
-        storeVideoWrap.style.display = 'none';
-    }
-    
-    // Nút cuộn nhanh xuống thực đơn
-    const scrollToMenuBtn = document.getElementById('scrollToMenuBtn');
-    if (scrollToMenuBtn) {
-        scrollToMenuBtn.addEventListener('click', () => {
-            const menuControlsEl = document.getElementById('menuControls') || document.getElementById('menuGrid');
-            if (menuControlsEl) {
-                menuControlsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        });
-    }
-
-    // Nút gọi điện & liên hệ
-    const heroCallBtn = document.getElementById('heroCallBtn');
-    const floatCallBtn = document.getElementById('floatCallBtn');
-    const floatZaloBtn = document.getElementById('floatZaloBtn');
-    const copyrightStoreEl = document.getElementById('copyrightStore');
-
-    if (storeNameEl) storeNameEl.textContent = STORE_CONFIG.name;
-    if (storeSloganEl) storeSloganEl.textContent = STORE_CONFIG.slogan;
-    if (storeAddressEl) storeAddressEl.textContent = STORE_CONFIG.address;
-    if (storeHoursEl) storeHoursEl.textContent = STORE_CONFIG.openHours;
-    
-    if (storeMapLinkEl && STORE_CONFIG.mapUrl) {
-        storeMapLinkEl.href = STORE_CONFIG.mapUrl;
-    }
-
-    if (wifiSsidEl && STORE_CONFIG.wifi) wifiSsidEl.textContent = STORE_CONFIG.wifi.ssid;
-    if (wifiPassEl && STORE_CONFIG.wifi) wifiPassEl.textContent = STORE_CONFIG.wifi.password;
-
-    // Hotline tel: links (text chuẩn ngắn gọn 1 dòng, không tràn)
-    const telLink = `tel:${STORE_CONFIG.hotline}`;
-    if (heroCallBtn) {
-        heroCallBtn.href = telLink;
-        heroCallBtn.innerHTML = `📞 Gọi Đặt Món: ${STORE_CONFIG.hotlineDisplay || STORE_CONFIG.hotline}`;
-    }
-    if (floatCallBtn) {
-        floatCallBtn.href = telLink;
-        floatCallBtn.innerHTML = `📞 Gọi Đặt Món`;
-    }
-    if (floatZaloBtn && STORE_CONFIG.zaloPhone) {
-        floatZaloBtn.href = `https://zalo.me/${STORE_CONFIG.zaloPhone}`;
-        floatZaloBtn.innerHTML = `💬 Chat Zalo`;
-    }
-    if (copyrightStoreEl) {
-        copyrightStoreEl.textContent = STORE_CONFIG.name;
+        if (carCallBtn && STORE_CONFIG.electricCarService.phone) {
+            carCallBtn.href = `tel:${STORE_CONFIG.electricCarService.phone}`;
+        }
+        if (carZaloBtn && STORE_CONFIG.electricCarService.zaloUrl) {
+            carZaloBtn.href = STORE_CONFIG.electricCarService.zaloUrl;
+        }
     }
 }
 
 /**
- * 2. Render các danh mục món ăn
+ * 2. Render danh mục lọc với FontAwesome Icons
  */
 function renderCategories() {
-    const categoryListEl = document.getElementById('categoryList');
-    if (!categoryListEl || typeof MENU_CATEGORIES === 'undefined') return;
+    const categoryNav = document.getElementById('categoryNav');
+    if (!categoryNav || typeof MENU_CATEGORIES === 'undefined') return;
 
-    categoryListEl.innerHTML = MENU_CATEGORIES.map(cat => `
-        <li>
-            <button class="category-pill ${cat.id === currentCategory ? 'active' : ''}" 
-                    data-category="${cat.id}">
-                <span>${cat.icon}</span>
-                <span>${cat.name}</span>
-            </button>
-        </li>
+    categoryNav.innerHTML = MENU_CATEGORIES.map(cat => `
+        <button type="button" class="cat-btn ${cat.id === currentCategory ? 'active' : ''}" data-category="${cat.id}">
+            <span class="cat-icon"><i class="${cat.iconClass}"></i></span>
+            <span class="cat-name">${cat.name}</span>
+        </button>
     `).join('');
 
-    // Bắt sự kiện chọn danh mục
-    categoryListEl.querySelectorAll('.category-pill').forEach(btn => {
+    categoryNav.querySelectorAll('.cat-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             currentCategory = btn.getAttribute('data-category');
-            
-            // Cập nhật class active
-            categoryListEl.querySelectorAll('.category-pill').forEach(b => b.classList.remove('active'));
+            categoryNav.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
 
-            // Scroll ngang mượt đến danh mục vừa chọn trên mobile
+            // Scroll ngang mượt
             btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-
             renderMenuItems();
         });
     });
 }
 
 /**
- * 3. Render danh sách món ăn theo bộ lọc & tìm kiếm
+ * 3. Render danh sách 12 món ăn / dịch vụ
  */
 function renderMenuItems() {
-    const menuGridEl = document.getElementById('menuGrid');
-    const itemCountEl = document.getElementById('itemCount');
-    if (!menuGridEl || typeof MENU_ITEMS === 'undefined') return;
+    const menuGrid = document.getElementById('menuGrid');
+    if (!menuGrid || typeof MENU_ITEMS === 'undefined') return;
 
-    // Lọc theo category và search
-    const filteredItems = MENU_ITEMS.filter(item => {
+    const filtered = MENU_ITEMS.filter(item => {
         const matchCategory = (currentCategory === 'all') || (item.category === currentCategory);
-        
+
         let matchSearch = true;
         if (searchQuery) {
-            const rawSearch = removeVietnameseTones(searchQuery);
-            const rawName = removeVietnameseTones(item.name);
-            const rawDesc = removeVietnameseTones(item.description || '');
-            matchSearch = rawName.includes(rawSearch) || rawDesc.includes(rawSearch);
+            const cleanSearch = removeVietnameseTones(searchQuery);
+            const cleanName = removeVietnameseTones(item.name);
+            const cleanDesc = removeVietnameseTones(item.description || '');
+            matchSearch = cleanName.includes(cleanSearch) || cleanDesc.includes(cleanSearch);
         }
 
-        return matchCategory && matchSearch && item.isAvailable;
+        return matchCategory && matchSearch;
     });
 
-    // Cập nhật số lượng món
-    if (itemCountEl) {
-        itemCountEl.textContent = `${filteredItems.length} món`;
-    }
-
-    // Nếu không tìm thấy món nào
-    if (filteredItems.length === 0) {
-        menuGridEl.innerHTML = `
-            <div class="no-results">
-                <div class="no-results-icon">🔍</div>
-                <div class="no-results-text">Không tìm thấy món phù hợp</div>
-                <div class="no-results-sub">Hãy thử từ khoá khác hoặc chọn danh mục khác nhé!</div>
+    if (filtered.length === 0) {
+        menuGrid.innerHTML = `
+            <div class="empty-menu-box">
+                <div class="empty-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+                <h4 class="empty-title">Không tìm thấy món phù hợp</h4>
+                <p class="empty-desc">Bạn vui lòng tìm kiếm từ khoá khác hoặc bấm chọn "Tất Cả Món" nhé!</p>
             </div>
         `;
         return;
     }
 
-    // Render danh sách món
-    menuGridEl.innerHTML = filteredItems.map(item => {
-        // Class style cho badge
-        let badgeClass = 'badge-bestseller';
-        if (item.badge && item.badge.toLowerCase().includes('khuyên')) badgeClass = 'badge-recommend';
-        if (item.badge && item.badge.toLowerCase().includes('tiết kiệm')) badgeClass = 'badge-save';
+    const fallbackImg = "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80";
 
-        // Xử lý fallback ảnh nếu mạng chậm
-        const fallbackImg = "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80";
+    menuGrid.innerHTML = filtered.map(item => {
+        const isService = item.isService || item.category === 'dich-vu';
+        const buttonHtml = isService 
+            ? '<i class="fa-solid fa-taxi"></i> Đặt xe' 
+            : '<i class="fa-solid fa-cart-shopping"></i> Đặt món';
 
         return `
-            <div class="food-card" data-id="${item.id}">
-                <div class="food-image-wrap" onclick="openItemModal(${item.id})">
-                    <img src="${item.image}" 
-                         alt="${item.name}" 
-                         class="food-image" 
-                         loading="lazy" 
-                         onerror="this.onerror=null; this.src='${fallbackImg}';">
-                    ${item.badge ? `<span class="food-badge ${badgeClass}">${item.badge}</span>` : ''}
+            <article class="food-card ${isService ? 'card-item-service' : ''}" data-id="${item.id}" onclick="openItemModal(${item.id})">
+                <div class="food-card-thumb">
+                    <img src="${item.image}" alt="${item.name}" class="food-card-img" loading="lazy" onerror="this.onerror=null; this.src='${fallbackImg}';">
                 </div>
-                <div class="food-content">
-                    <h3 class="food-name" onclick="openItemModal(${item.id})">${item.name}</h3>
-                    <p class="food-description">${item.description || 'Món ăn thơm ngon đậm đà chuẩn vị quán.'}</p>
-                    <div class="food-footer">
-                        <span class="food-price">${formatCurrency(item.price)}</span>
-                        <a href="tel:${STORE_CONFIG.hotline}" 
-                           class="btn-order-call" 
-                           title="Gọi đặt món này ngay">
-                            <span>📞</span> Đặt Món
-                        </a>
+                <div class="food-card-body">
+                    <h3 class="food-card-name" title="${item.name}">${item.name}</h3>
+                    <p class="food-card-desc">${item.description || 'Đặc sản Bánh Tráng Chờ thơm ngon đậm đà.'}</p>
+                    <div class="food-card-bottom">
+                        <span class="food-card-price ${isService ? 'price-service' : ''}">${formatPrice(item.price)}</span>
+                        <button type="button" class="btn-card-order ${isService ? 'btn-service' : ''}" onclick="event.stopPropagation(); handleOrderClick(${item.id});">
+                            ${buttonHtml}
+                        </button>
                     </div>
                 </div>
-            </div>
+            </article>
         `;
     }).join('');
 }
 
 /**
- * 4. Thiết lập sự kiện tương tác (Search, Copy Wifi, Modal, Back To Top)
+ * 4. Xử lý khi bấm nút Đặt Món trên từng thẻ
  */
-function setupEventListeners() {
-    // Tìm kiếm món ăn Live Search
+function handleOrderClick(itemId) {
+    openItemModal(itemId);
+}
+
+/**
+ * 5. Mở Modal Chi Tiết Món Ăn
+ */
+function openItemModal(itemId) {
+    const item = MENU_ITEMS.find(m => m.id === itemId);
+    if (!item) return;
+
+    const overlay = document.getElementById('itemModalOverlay');
+    const img = document.getElementById('modalImage');
+    const title = document.getElementById('modalTitle');
+    const price = document.getElementById('modalPrice');
+    const desc = document.getElementById('modalDescription');
+    const callBtn = document.getElementById('modalCallBtn');
+
+    if (img) {
+        img.src = item.image;
+        img.alt = item.name;
+    }
+    if (title) title.textContent = item.name;
+    if (price) price.textContent = formatPrice(item.price);
+    if (desc) desc.textContent = item.description || 'Món ngon nóng hổi, giao hàng tận nơi nhanh chóng.';
+
+    const isService = item.isService || item.category === 'dich-vu';
+    if (callBtn) {
+        if (isService) {
+            const carPhone = item.servicePhone || "0979889069";
+            const carPhoneDisplay = item.servicePhoneDisplay || "0979.889.069";
+            callBtn.href = `tel:${carPhone}`;
+            callBtn.innerHTML = `<i class="fa-solid fa-phone"></i> Gọi Đặt Xe Bảo Tuệ Ngay (${carPhoneDisplay})`;
+            callBtn.classList.add('btn-car-highlight');
+        } else {
+            const foodPhone = STORE_CONFIG.hotlineDisplay || STORE_CONFIG.hotline;
+            callBtn.href = `tel:${STORE_CONFIG.hotline}`;
+            callBtn.innerHTML = `<i class="fa-solid fa-phone"></i> Gọi Đặt Món Này (${foodPhone})`;
+            callBtn.classList.remove('btn-car-highlight');
+        }
+    }
+
+    if (overlay) {
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+/**
+ * 6. Đóng Modal
+ */
+function closeModal() {
+    const overlay = document.getElementById('itemModalOverlay');
+    if (overlay) {
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+}
+
+// Modal xem ảnh danh thiếp xe điện Bảo Tuệ
+window.openCarCardModal = function() {
+    const modal = document.getElementById('carCardModalOverlay');
+    if (modal) {
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+};
+
+window.closeCarCardModal = function() {
+    const modal = document.getElementById('carCardModalOverlay');
+    if (modal) {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+};
+
+/**
+ * 7. Thiết lập Video âm thanh
+ */
+function setupVideoAudio() {
+    const video = document.getElementById('storeVideoPlayer');
+    const unmuteBtn = document.getElementById('unmuteVideoBtn');
+
+    if (video && unmuteBtn) {
+        unmuteBtn.addEventListener('click', () => {
+            video.muted = !video.muted;
+            if (!video.muted) {
+                unmuteBtn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i> <span>Tắt Âm Thanh</span>';
+                video.play().catch(() => {});
+            } else {
+                unmuteBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i> <span>Bật Âm Thanh</span>';
+            }
+        });
+    }
+}
+
+/**
+ * 8. Thiết lập sự kiện
+ */
+function setupEvents() {
+    // Search input
     const searchInput = document.getElementById('searchInput');
     const clearSearchBtn = document.getElementById('clearSearchBtn');
 
@@ -348,7 +304,11 @@ function setupEventListeners() {
         searchInput.addEventListener('input', (e) => {
             searchQuery = e.target.value;
             if (clearSearchBtn) {
-                clearSearchBtn.style.display = searchQuery ? 'flex' : 'none';
+                if (searchQuery.length > 0) {
+                    clearSearchBtn.classList.add('show');
+                } else {
+                    clearSearchBtn.classList.remove('show');
+                }
             }
             renderMenuItems();
         });
@@ -358,122 +318,49 @@ function setupEventListeners() {
         clearSearchBtn.addEventListener('click', () => {
             searchInput.value = '';
             searchQuery = '';
-            clearSearchBtn.style.display = 'none';
+            clearSearchBtn.classList.remove('show');
             searchInput.focus();
             renderMenuItems();
         });
     }
 
-    // Nút copy mật khẩu WiFi 1 chạm
-    const copyWifiBtn = document.getElementById('copyWifiBtn');
-    if (copyWifiBtn && STORE_CONFIG.wifi) {
-        copyWifiBtn.addEventListener('click', () => {
-            const pass = STORE_CONFIG.wifi.password;
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(pass).then(() => {
-                    showToast(`Đã sao chép mật khẩu: ${pass}`);
-                }).catch(() => {
-                    fallbackCopy(pass);
-                });
-            } else {
-                fallbackCopy(pass);
-            }
+    // Close modal
+    const overlay = document.getElementById('itemModalOverlay');
+    const closeBtn = document.getElementById('modalCloseBtn');
+    if (overlay) {
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) closeModal();
+        });
+    }
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+    const carOverlay = document.getElementById('carCardModalOverlay');
+    if (carOverlay) {
+        carOverlay.addEventListener('click', (e) => {
+            if (e.target === carOverlay) closeCarCardModal();
         });
     }
 
-    function fallbackCopy(text) {
-        const tempInput = document.createElement('input');
-        tempInput.value = text;
-        document.body.appendChild(tempInput);
-        tempInput.select();
-        document.execCommand('copy');
-        document.body.removeChild(tempInput);
-        showToast(`Đã sao chép mật khẩu: ${text}`);
-    }
-
-    // Đóng Modal khi bấm overlay hoặc nút đóng
-    const modalOverlay = document.getElementById('itemModalOverlay');
-    const modalCloseBtn = document.getElementById('modalCloseBtn');
-    if (modalOverlay) {
-        modalOverlay.addEventListener('click', (e) => {
-            if (e.target === modalOverlay) closeModal();
-        });
-    }
-    if (modalCloseBtn) {
-        modalCloseBtn.addEventListener('click', closeModal);
-    }
-
-    // Phím ESC đóng modal
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeModal();
+        if (e.key === 'Escape') {
+            closeModal();
+            closeCarCardModal();
+        }
     });
 
-    // Nút cuộn lên đầu trang (Back to Top)
+    // Back to top
     const btnBackToTop = document.getElementById('btnBackToTop');
     if (btnBackToTop) {
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 280) {
-                btnBackToTop.classList.add('show');
+            if (window.scrollY > 300) {
+                btnBackToTop.classList.add('visible');
             } else {
-                btnBackToTop.classList.remove('show');
+                btnBackToTop.classList.remove('visible');
             }
         }, { passive: true });
 
         btnBackToTop.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
-    }
-}
-
-/**
- * 5. Mở Modal xem chi tiết món ăn
- */
-function openItemModal(itemId) {
-    const item = MENU_ITEMS.find(m => m.id === itemId);
-    if (!item) return;
-
-    const modalOverlay = document.getElementById('itemModalOverlay');
-    const modalImage = document.getElementById('modalImage');
-    const modalBadge = document.getElementById('modalBadge');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalPrice = document.getElementById('modalPrice');
-    const modalDescription = document.getElementById('modalDescription');
-    const modalCallBtn = document.getElementById('modalCallBtn');
-
-    if (modalImage) {
-        modalImage.src = item.image;
-        modalImage.alt = item.name;
-    }
-    if (modalBadge) {
-        if (item.badge) {
-            modalBadge.textContent = item.badge;
-            modalBadge.style.display = 'inline-block';
-        } else {
-            modalBadge.style.display = 'none';
-        }
-    }
-    if (modalTitle) modalTitle.textContent = item.name;
-    if (modalPrice) modalPrice.textContent = formatCurrency(item.price);
-    if (modalDescription) modalDescription.textContent = item.description || 'Món ăn đặc sản thơm ngon hấp dẫn.';
-
-    if (modalCallBtn) {
-        modalCallBtn.href = `tel:${STORE_CONFIG.hotline}`;
-        modalCallBtn.innerHTML = `📞 Gọi Đặt Món Này (${STORE_CONFIG.hotlineDisplay || STORE_CONFIG.hotline})`;
-    }
-
-    if (modalOverlay) {
-        modalOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-}
-
-/**
- * 6. Đóng Modal
- */
-function closeModal() {
-    const modalOverlay = document.getElementById('itemModalOverlay');
-    if (modalOverlay) {
-        modalOverlay.classList.remove('active');
-        document.body.style.overflow = '';
     }
 }

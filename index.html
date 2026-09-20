@@ -4,17 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Thực Đơn Quán Bánh Tráng Chờ - Ăn Vặt & Đặc Sản</title>
+    <title>Bánh Tráng Chờ - Ăn Vặt Thả Ga, Đậm Đà Chuẩn Vị & Taxi Xe Điện Bảo Tuệ Gò Công</title>
     <meta name="description"
-        content="Thực đơn điện tử QR quán Bánh Tráng Chờ - Món ăn vặt thơm ngon, bánh tráng trộn, trà trái cây tươi mát. Đặt món và gọi hotline dễ dàng.">
-    <meta name="theme-color" content="#FF5E14">
+        content="Thực đơn Bánh Tráng Chờ: Bánh tráng trộn, cuộn, nướng, trứng cút nướng, mì trộn, nui chiên, các loại trà 10k, sâm lạnh 5k và Dịch vụ xe điện 5 chỗ Bảo Tuệ Green Car giá rẻ tại Gò Công. Hotline: 0399.069.063 - Xe điện: 0979.889.069.">
+    <meta name="theme-color" content="#E52E2E">
 
-    <!-- Google Fonts: Be Vietnam Pro (Font chuẩn tiếng Việt cao cấp, dấu thanh hoàn hảo) -->
+    <!-- Google Fonts: Google Sans Flex (Chuẩn Google Fonts, hỗ trợ tiếng Việt 100%) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
+
+    <!-- FontAwesome 6 (Icons sắc nét chuẩn chuyên nghiệp) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="css/style.css">
@@ -22,157 +27,354 @@
 
 <body>
 
-    <!-- ==================== HEADER & STORE INFO ==================== -->
-    <header class="hero-header">
-        <div class="container">
-            <div class="store-card">
-                <div class="store-top">
-                    <div class="store-logo" aria-label="Logo quán" style="overflow: hidden; padding: 0;">
-                        <img id="storeLogoImg"
-                            src="https://res.cloudinary.com/dzpj1y0ww/image/upload/v1786196597/banhtrangcho/banhtrangcho_tq6y85.jpg"
-                            alt="Logo Quán"
-                            style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block;">
-                    </div>
-                    <div class="store-title-wrap">
-                        <div class="store-status">
-                            <span class="status-dot"></span> Đang Mở Cửa Phục Vụ
+    <!-- ==================== TOP NAVIGATION BAR ==================== -->
+    <header class="top-nav-bar">
+        <div class="site-container">
+            <div class="nav-inner">
+                <!-- Brand Info Left -->
+                <div class="nav-brand">
+                    <img id="storeLogoImg"
+                        src="https://res.cloudinary.com/dzpj1y0ww/image/upload/v1789880973/logo_hdfzqr.jpg"
+                        alt="Logo Bánh Tráng Chờ" class="nav-logo">
+                    <div class="brand-text">
+                        <div class="brand-title-row">
+                            <h1 class="brand-name" id="storeName">Bánh Tráng Chờ</h1>
+                            <!-- Nút Zalo nhỏ gọn chỉ hiện trên Mobile trong header -->
+                            <a href="https://zalo.me/0399069063" target="_blank" rel="noopener noreferrer"
+                                class="btn-zalo-mobile-top">
+                                <i class="fa-solid fa-comment-dots"></i>
+                                <span>Zalo</span>
+                            </a>
                         </div>
-                        <h1 class="store-name" id="storeName">Bánh Tráng chờ ruộng cạn</h1>
-                        <p class="store-slogan" id="storeSlogan">Ăn vặt thả ga - Đậm đà chuẩn vị</p>
-                    </div>
-                </div>
+                        <p class="brand-slogan" id="storeSlogan">Ăn vặt thả ga – Đậm đà chuẩn vị</p>
 
-                <!-- Ảnh Xe Đẩy / Không Gian Quán Thực Tế (Tự động nạp từ data.js) -->
-                <div class="store-banner-wrap" id="storeBannerWrap" style="display: none;">
-                    <img id="storeBannerImg" src="" alt="Xe Bánh Tráng Phục Vụ" class="store-banner-img">
-                    <!-- <span class="store-banner-badge">🛵 Xe Bánh Tráng Phục Vụ Tại Quán</span> -->
-                </div>
-
-                <!-- Chi tiết: Địa chỉ, Giờ giấc & Bản đồ -->
-                <div class="store-details">
-                    <div class="detail-item">
-                        <span class="icon">📍</span>
-                        <div>
-                            <span id="storeAddress">123 Đường Ăn Vặt, Quận 1, TP. Hồ Chí Minh</span>
-                            <br>
-                            <!-- <a id="storeMapLink" href="https://maps.google.com" target="_blank"
-                                rel="noopener noreferrer">
-                                🗺️ Xem vị trí trên Bản Đồ Google Maps &rarr;
-                            </a> -->
+                        <!-- Khung Pill Badges Mạng Xã Hội TikTok & Facebook -->
+                        <div class="nav-social-tags">
+                            <a id="navTiktokLink" href="https://www.tiktok.com/@banhtrangchogocong" target="_blank"
+                                rel="noopener noreferrer" class="social-pill-badge badge-tiktok"
+                                title="Kênh TikTok Bánh Tráng Chờ">
+                                <i class="fa-brands fa-tiktok"></i>
+                                <span>@banhtrangchogocong</span>
+                            </a>
+                            <a id="navFbLink" href="https://www.facebook.com/banhtrangcho" target="_blank"
+                                rel="noopener noreferrer" class="social-pill-badge badge-fb"
+                                title="Fanpage Facebook Bánh Tráng Chờ">
+                                <i class="fa-brands fa-facebook"></i>
+                                <span>Bánh Tráng Chờ</span>
+                            </a>
                         </div>
                     </div>
-                    <!-- <div class="detail-item">
-                        <span class="icon">⏰</span>
-                        <div>
-                            <span>Giờ phục vụ:</span><br>
-                            <strong id="storeHours">09:30 - 22:30 hàng ngày</strong>
+                </div>
+
+                <!-- Meta Info Right (Desktop & Tablet) -->
+                <div class="nav-meta">
+                    <div class="meta-item meta-location">
+                        <i class="fa-solid fa-location-dot meta-icon-fa"></i>
+                        <span class="meta-bold">Gò Công</span>
+                    </div>
+
+                    <div class="meta-item meta-time-box">
+                        <i class="fa-solid fa-clock meta-icon-fa"></i>
+                        <div class="meta-col">
+                            <span class="meta-bold" id="storeHours">09:30 - 22:30</span>
+                            <span class="meta-sub">Hàng ngày</span>
                         </div>
-                    </div> -->
-                </div>
-
-
-                <!-- Video Giới Thiệu Quán (Tự động nạp từ data.js) -->
-                <div class="store-video-wrap" id="storeVideoWrap" style="display: none;">
-                    <div class="store-video-header">
-                        <span class="video-icon">🎬</span>
-                        <span class="video-title">Khám Phá Quán Chúng Mình</span>
-                        <button type="button" id="unmuteVideoBtn" class="btn-unmute-header" title="Bật/Tắt âm thanh">
-                            🔊 Bật Âm Thanh
-                        </button>
                     </div>
-                    <div class="store-video-container">
-                        <video id="storeVideoPlayer" autoplay muted loop playsinline controls preload="auto"
-                            class="store-video-element">
-                            <source src="video/introduce.mp4" type="video/mp4">
-                            Trình duyệt của bạn không hỗ trợ video HTML5.
-                        </video>
-                        <button type="button" id="unmuteFloatingBtn" class="btn-unmute-floating">
-                            🔊 Chạm Để Mở Tiếng
-                        </button>
-                    </div>
-                </div>
 
-                <!-- Nút Đặt Món Ngay (Cuộn mượt xuống khu vực thực đơn món ăn) -->
-                <div class="store-actions">
-                    <button type="button" id="scrollToMenuBtn" class="btn-scroll-menu">
-                        <span class="btn-icon">🍽️</span>
-                        <span>Thực Đơn</span>
-                        <span class="btn-arrow">👇</span>
-                    </button>
+                    <a id="navHotlineBtn" href="tel:0399069063" class="meta-item meta-phone" title="Gọi Hotline Đặt Món">
+                        <i class="fa-solid fa-phone meta-icon-fa"></i>
+                        <span class="meta-bold" id="storeHotlineText">0399.069.063</span>
+                    </a>
+
+                    <a id="navZaloBtn" href="https://zalo.me/0399069063" target="_blank" rel="noopener noreferrer"
+                        class="btn-zalo-pill">
+                        <i class="fa-solid fa-comment-dots"></i>
+                        <span>Nhắn Zalo</span>
+                    </a>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- ==================== CONTROLS: SEARCH & CATEGORIES ==================== -->
-    <nav class="menu-controls" id="menuControls" aria-label="Bộ lọc thực đơn">
-        <div class="container">
-            <!-- Ô tìm kiếm món ăn -->
-            <div class="search-box">
-                <span class="search-icon">🔍</span>
-                <input type="text" id="searchInput" class="search-input"
-                    placeholder="Tìm món ăn yêu thích (bánh tráng, nem rán, trà đào...)" autocomplete="off">
-                <button type="button" id="clearSearchBtn" class="clear-search-btn" title="Xóa tìm kiếm">✕</button>
+    <!-- ==================== HERO BANNER (BÊN TRÁI: ẢNH CỬA HÀNG THỰC TẾ) ==================== -->
+    <section class="hero-section">
+        <div class="site-container hero-container">
+            <!-- CỘT TRÁI: ẢNH CỬA HÀNG / QUẦY HÀNG THỰC TẾ -->
+            <div class="hero-left-store-visual">
+                <div class="store-hero-card">
+                    <img id="storeHeroImg" src="images/banner3.png"
+                        alt="Quầy Bánh Tráng Chờ Thực Tế Tại Quán" class="store-hero-img">
+                    <div class="store-hero-badge-overlay">
+                        <div class="store-live-pill">
+                            <span class="live-dot"></span>
+                            <span>Quầy Bánh Tráng Chờ Thực Tế</span>
+                        </div>
+                        <p class="store-hero-addr">
+                            <i class="fa-solid fa-location-dot"></i> Ruộng cạn tân hoà, Gò Công
+                        </p>
+                    </div>
+                </div>
             </div>
 
-            <!-- Thanh cuộn danh mục món -->
-            <div class="categories-wrapper">
-                <ul class="categories-list" id="categoryList">
-                    <!-- Danh mục sẽ được render tự động từ js/app.js -->
-                </ul>
+            <!-- CỘT PHẢI: NỘI DUNG THƯƠNG HIỆU & NÚT HÀNH ĐỘNG -->
+            <div class="hero-right-content">
+                <h2 class="hero-brand-title">Bánh Tráng Chờ</h2>
+                <div class="hero-cursive-slogan">Ăn vặt thả ga</div>
+                <h3 class="hero-sub-title">Đậm đà chuẩn vị</h3>
+
+                <div class="hero-features-list">
+                    <div class="feature-item">
+                        <i class="fa-solid fa-leaf feat-icon feat-leaf"></i>
+                        <span>Nguyên liệu tươi ngon</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fa-solid fa-heart feat-icon feat-heart"></i>
+                        <span>Hương vị đậm đà</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fa-solid fa-motorcycle feat-icon feat-bike"></i>
+                        <span>Đặt món nhanh chóng</span>
+                    </div>
+                </div>
+
+                <div class="hero-action-buttons">
+                    <a href="#menuSection" class="btn-hero-menu">
+                        <i class="fa-solid fa-book-open"></i>
+                        <span>Xem Menu</span>
+                        <i class="fa-solid fa-arrow-down btn-menu-arrow"></i>
+                    </a>
+                </div>
             </div>
         </div>
-    </nav>
+    </section>
 
-    <!-- ==================== MENU LIST SECTION ==================== -->
-    <main class="container">
-        <!-- Tiêu đề và số lượng món -->
-        <div class="menu-section-header">
-            <h2 class="menu-section-title">
-                <span>📋 Thực Đơn Quán</span>
-            </h2>
-            <span class="item-count-badge" id="itemCount">Đang tải...</span>
+    <!-- ==================== VIDEO GIỚI THIỆU QUÁN (FULL TRÀN VIỀN) ==================== -->
+    <section class="store-video-fullbleed" id="videoSection">
+        <div class="video-fullbleed-wrap">
+            <video id="storeVideoPlayer" autoplay muted loop playsinline controls preload="auto"
+                class="video-fullbleed-player">
+                <source src="https://res.cloudinary.com/dzpj1y0ww/video/upload/v1789880973/ideo_eyzzkf.mp4" type="video/mp4">
+                Trình duyệt của bạn không hỗ trợ video HTML5.
+            </video>
+            <button type="button" id="unmuteVideoBtn" class="btn-floating-unmute" title="Bật/Tắt âm thanh">
+                <i class="fa-solid fa-volume-high"></i>
+                <span>Bật Âm Thanh</span>
+            </button>
         </div>
+    </section>
 
-        <!-- Grid hiển thị danh sách các món ăn -->
-        <section class="menu-grid" id="menuGrid" aria-live="polite">
-            <!-- Thẻ món ăn sẽ được render tự động từ data.js -->
-        </section>
-    </main>
+    <!-- ==================== SERVICE CARD (BẢO TUỆ GREEN CAR) ==================== -->
+    <section class="service-strip-section">
+        <div class="site-container">
+            <div class="service-card-clean service-baotue-card">
+                <div class="service-thumb-wrap">
+                    <img id="carFeatureImg" src="images/xe_vinfast_do.jpg"
+                        alt="Bảo Tuệ Green Car - Xe Điện 5 Chỗ Giá Rẻ" class="service-thumb-img">
+                </div>
+                <div class="service-details">
+                    <div class="service-tag-row">
+                        <span class="service-badge-red">BẢO TUỆ GREEN CAR</span>
+                        <span class="service-badge-sub">TAXI 24/24 GIÁ RẺ</span>
+                    </div>
+                    <h3 class="service-clean-title">Phục Vụ Taxi 24/24 Trong Và Ngoài Tỉnh</h3>
+                    <p class="service-clean-desc">
+                        Xe điện VinFast 5 chỗ êm ái, thoáng mát, không mùi say xe. Đưa đón tận nơi, an toàn, phục vụ nhiệt tình 24/24. <strong>Gọi là có!</strong>
+                    </p>
+                    <div class="service-slogan-note">
+                        <i class="fa-solid fa-star"></i> Hân hạnh được phục vụ quý khách! • <i class="fa-solid fa-location-dot"></i> Ruộng Cạn - Tân Hòa
+                    </div>
+                </div>
+                <div class="service-cta-side car-cta-group">
+                    <a id="carCallBtn" href="tel:0979889069" class="btn-clean-call-car btn-car-highlight">
+                        <i class="fa-solid fa-phone"></i>
+                        <span>Gọi: <strong>0979.889.069</strong></span>
+                    </a>
+                    <a id="carZaloBtn" href="https://zalo.me/0979889069" target="_blank" rel="noopener noreferrer"
+                        class="btn-car-zalo-pill">
+                        <i class="fa-solid fa-comment-dots"></i>
+                        <span>Zalo Đặt Xe</span>
+                    </a>
+                    <button type="button" class="btn-view-card-modal" onclick="openCarCardModal()">
+                        <i class="fa-solid fa-id-card"></i>
+                        <span>Xem Danh Thiếp</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <!-- ==================== BOTTOM FLOATING BAR (MOBILE FIRST) ==================== -->
-    <div class="bottom-floating-bar" aria-label="Thao tác nhanh">
-        <div class="floating-inner">
-            <a id="floatCallBtn" href="tel:0988888888" class="btn-float-call">
-                📞 Gọi Đặt Món Ngay
+    <!-- ==================== CATEGORIES & SEARCH ROW ==================== -->
+    <section class="filter-search-section" id="menuSection">
+        <div class="site-container">
+            <div class="filter-search-wrapper">
+                <!-- Category Buttons List -->
+                <div class="categories-scroll-area">
+                    <div class="categories-nav-group" id="categoryNav">
+                        <!-- Dynamic rendering from js/app.js with FontAwesome -->
+                    </div>
+                </div>
+
+                <!-- Search Input Field -->
+                <div class="search-box-round">
+                    <i class="fa-solid fa-magnifying-glass search-box-icon"></i>
+                    <input type="text" id="searchInput" class="search-box-input"
+                        placeholder="Tìm món (bánh tráng, mì trộn, trà...)" autocomplete="off">
+                    <button type="button" id="clearSearchBtn" class="search-clear-x" title="Xóa tìm kiếm">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== MENU SECTION ==================== -->
+    <section class="menu-display-section">
+        <div class="site-container">
+            <div class="section-title-clean">
+                <h2 class="title-main">Thực Đơn Quán</h2>
+                <div class="title-sub-row">
+                    <span class="title-dash">—</span>
+                    <span class="title-sub-text">Món ăn chế biến nóng hổi, giao nhanh</span>
+                </div>
+            </div>
+
+            <!-- Food Items Grid (12 cards) -->
+            <div class="food-cards-grid" id="menuGrid" aria-live="polite">
+                <!-- Dynamic rendering from js/app.js -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== CLEAN FOOTER ==================== -->
+    <footer class="site-footer-clean">
+        <div class="site-container">
+            <!-- Top Info Row -->
+            <div class="footer-top-row">
+                <div class="footer-brand-side">
+                    <img src="https://res.cloudinary.com/dzpj1y0ww/image/upload/v1789880973/logo_hdfzqr.jpg"
+                        alt="Logo Bánh Tráng Chờ" class="footer-logo">
+                    <div class="footer-brand-info">
+                        <h4 class="footer-brand-title">Bánh Tráng Chờ</h4>
+                        <p class="footer-brand-slogan">Ăn vặt thả ga – Đậm đà chuẩn vị</p>
+                    </div>
+                </div>
+
+                <div class="footer-meta-center">
+                    <div class="f-meta-item">
+                        <i class="fa-solid fa-location-dot icon-red"></i>
+                        <span class="f-bold">Gò Công</span>
+                    </div>
+                    <div class="f-meta-item">
+                        <i class="fa-solid fa-clock icon-red"></i>
+                        <div class="f-col">
+                            <span class="f-bold">09:30 - 22:30</span>
+                            <span class="f-sub">Hàng ngày</span>
+                        </div>
+                    </div>
+                    <a href="tel:0399069063" class="f-meta-item f-phone" title="Gọi Hotline Quán">
+                        <i class="fa-solid fa-phone icon-red"></i>
+                        <span class="f-bold">0399.069.063</span>
+                    </a>
+                </div>
+
+                <div class="footer-social-side">
+                    <a href="https://www.tiktok.com/@banhtrangchogocong" target="_blank" rel="noopener noreferrer"
+                        class="social-pill-badge badge-tiktok" title="TikTok Bánh Tráng Chờ">
+                        <i class="fa-brands fa-tiktok"></i>
+                        <span>@banhtrangchogocong</span>
+                    </a>
+                    <a href="https://www.facebook.com/banhtrangcho" target="_blank" rel="noopener noreferrer"
+                        class="social-pill-badge badge-fb" title="Facebook Bánh Tráng Chờ">
+                        <i class="fa-brands fa-facebook"></i>
+                        <span>Bánh Tráng Chờ</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Action Buttons Row -->
+            <div class="footer-cta-row">
+                <a href="tel:0399069063" class="btn-footer-call-red">
+                    <i class="fa-solid fa-phone f-btn-icon"></i>
+                    <span>Đặt Món: 0399.069.063</span>
+                </a>
+                <a href="tel:0979889069" class="btn-footer-taxi-call">
+                    <i class="fa-solid fa-taxi f-btn-icon"></i>
+                    <span>Đặt Xe Bảo Tuệ: 0979.889.069</span>
+                </a>
+                <a href="https://zalo.me/0399069063" target="_blank" rel="noopener noreferrer"
+                    class="btn-footer-zalo-white">
+                    <i class="fa-solid fa-comment-dots f-btn-icon"></i>
+                    <span>Chat Zalo</span>
+                </a>
+            </div>
+
+            <!-- Copyright Row -->
+            <div class="footer-bottom-row">
+                <p class="f-copy">© 2026 Bánh Tráng Chờ & Bảo Tuệ Green Car. All rights reserved.</p>
+                <p class="f-slogan-sub">Ăn ngon – Sống vui – Gò Công</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== MOBILE FLOATING ACTIONS ==================== -->
+    <aside class="mobile-bottom-bar" aria-label="Thao tác nhanh trên di động">
+        <div class="mobile-bottom-inner">
+            <a href="tel:0399069063" class="m-btn-call">
+                <i class="fa-solid fa-phone"></i>
+                <span>Đặt Món</span>
             </a>
-            <a id="floatZaloBtn" href="https://zalo.me" target="_blank" rel="noopener noreferrer"
-                class="btn-float-zalo">
-                💬 Chat Zalo
+            <a href="tel:0979889069" class="m-btn-car-call">
+                <i class="fa-solid fa-taxi"></i>
+                <span>Đặt Xe 24/24</span>
             </a>
+            <a href="https://zalo.me/0399069063" target="_blank" rel="noopener noreferrer" class="m-btn-zalo">
+                <i class="fa-solid fa-comment-dots"></i>
+                <span>Zalo</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- ==================== MODAL XEM CHI TIẾT MÓN ĂN ==================== -->
+    <div class="item-modal-overlay" id="itemModalOverlay" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="item-modal-card">
+            <div class="modal-card-top">
+                <img id="modalImage" src="" alt="Món ăn" class="modal-card-img">
+                <button type="button" class="modal-close-icon" id="modalCloseBtn" aria-label="Đóng">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-card-body">
+                <h3 id="modalTitle" class="modal-card-name">Tên Món Ăn</h3>
+                <div id="modalPrice" class="modal-card-price">15k - 25k</div>
+                <div class="modal-card-sep"></div>
+                <p id="modalDescription" class="modal-card-desc">Mô tả chi tiết món ăn...</p>
+
+                <div class="modal-card-footer">
+                    <a id="modalCallBtn" href="tel:0399069063" class="modal-btn-order">
+                        <i class="fa-solid fa-phone"></i>
+                        <span>Gọi Đặt Ngay</span>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- ==================== MODAL XEM CHI TIẾT MÓN ĂN ==================== -->
-    <div class="modal-overlay" id="itemModalOverlay" role="dialog" aria-modal="true" aria-hidden="true">
-        <div class="modal-container">
-            <div class="modal-image-wrap">
-                <img id="modalImage" src="" alt="Chi tiết món ăn" class="modal-image">
-                <button type="button" class="modal-close-btn" id="modalCloseBtn" aria-label="Đóng modal">✕</button>
+    <!-- ==================== MODAL XEM DANH THIẾP XE ĐIỆN BẢO TUỆ ==================== -->
+    <div class="item-modal-overlay" id="carCardModalOverlay" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="item-modal-card car-card-dialog">
+            <div class="modal-card-top car-modal-top">
+                <img src="images/card_xe_clean.jpg" alt="Danh thiếp Bảo Tuệ Green Car" class="car-modal-full-img">
+                <button type="button" class="modal-close-icon" onclick="closeCarCardModal()" aria-label="Đóng">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
             </div>
-            <div class="modal-body">
-                <div>
-                    <span id="modalBadge" class="modal-badge">Món Nổi Bật</span>
-                </div>
-                <h3 id="modalTitle" class="modal-title">Tên Món Ăn</h3>
-                <div id="modalPrice" class="modal-price">0đ</div>
-
-                <div class="modal-desc-heading">Mô tả & Thành phần:</div>
-                <p id="modalDescription" class="modal-desc-text">Mô tả chi tiết món ăn...</p>
-
-                <div class="modal-actions">
-                    <a id="modalCallBtn" href="tel:0988888888" class="modal-btn-call">
-                        📞 Gọi Đặt Món Này
+            <div class="modal-card-body">
+                <h3 class="modal-card-name">BẢO TUỆ GREEN CAR</h3>
+                <p class="modal-card-desc">Chuyên phục vụ Taxi 24/24 trong và ngoài tỉnh. Gọi là có!</p>
+                <div class="modal-card-footer">
+                    <a href="tel:0979889069" class="modal-btn-order btn-car-highlight">
+                        <i class="fa-solid fa-phone"></i>
+                        <span>Gọi Ngay: 0979.889.069</span>
                     </a>
                 </div>
             </div>
@@ -180,29 +382,12 @@
     </div>
 
     <!-- ==================== NÚT CUỘN LÊN ĐẦU TRANG ==================== -->
-    <button type="button" class="btn-back-to-top" id="btnBackToTop" title="Cuộn lên đầu trang"
-        aria-label="Cuộn lên đầu trang">
-        ↑
+    <button type="button" class="scroll-top-btn" id="btnBackToTop" title="Lên đầu trang" aria-label="Lên đầu trang">
+        <i class="fa-solid fa-arrow-up"></i>
     </button>
 
-    <!-- ==================== FOOTER ==================== -->
-    <footer class="page-footer">
-        <div class="container">
-            <p>© 2026 <strong id="copyrightStore">Bánh Tráng Chờ</strong>. Quét mã QR - Thưởng thức trọn vẹn.</p>
-            <!-- <p style="margin-top: 6px; font-size: 0.8rem;">
-                <a href="qr.html" style="color: var(--primary); font-weight: 700; text-decoration: underline;">
-                    📱 In Standee & Tạo Mã QR Dán Bàn Tại Đây &rarr;
-                </a>
-            </p> -->
-            <p style="margin-top: 4px; font-size: 0.74rem; color: #BBB;">Trang thực đơn điện tử tối ưu cho điện thoại &
-                máy tính bảng.</p>
-        </div>
-    </footer>
-
-    <!-- ==================== JAVASCRIPT LIBRARIES ==================== -->
-    <!-- 1. Dữ liệu cấu hình & danh sách món (Array Data Object) -->
+    <!-- ==================== SCRIPTS ==================== -->
     <script src="js/data.js"></script>
-    <!-- 2. Logic xử lý giao diện, tìm kiếm, lọc, gọi điện thoại -->
     <script src="js/app.js"></script>
 </body>
 
